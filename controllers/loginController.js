@@ -4,7 +4,7 @@ const { readFile } = require('../localDatabase/fileReadWrite');
 const loginController = (req, res) => {
     const { email, password } = req.body
 
-    // ===== validation ======
+    // ============ validation ============
     let errors = {}
     let pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
@@ -21,6 +21,7 @@ const loginController = (req, res) => {
     if (errors.email || errors.password) {
         res.send({ errors })
     } else {
+        // ============ Checking User info in Database ============
         const userData = readFile()
         const findUserbyEmail = userData.find((user) => user.email == email)
 

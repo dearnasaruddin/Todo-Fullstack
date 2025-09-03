@@ -5,7 +5,7 @@ const { readFile, writeFile } = require("../localDatabase/fileReadWrite");
 const registrationController = async (req, res) => {
     const { username, email, password, confirmPassword } = req.body
 
-    // ===== validation ======
+    // =========== validation ============
     let errors = {}
     let pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
@@ -31,7 +31,7 @@ const registrationController = async (req, res) => {
     if (errors.username || errors.email || errors.password || errors.confirmPassword) {
         res.send({ errors })
     } else {
-
+        // =========== Varification Mail ============
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
@@ -49,7 +49,8 @@ const registrationController = async (req, res) => {
         });
 
         // transporter.sendMail()
-
+        
+        // ============ Save User Data in LocalDB after hashing password ============
         const hash = await bcrypt.hash(password, 10);
 
         const userData = readFile()
